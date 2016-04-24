@@ -1,0 +1,62 @@
+<link rel="import" href="../polymer/polymer.html"/>
+
+<dom-module id="wy-machine-bar">
+	<script type="text/javascript" src="../d3/d3.js"></script>
+    <template>
+		<svg width="100%" height="18">	
+			<rect x="0" y="0" width="100%" height="15" fill="#E5E5E5"/>
+			<rect class="value-rect" x="0" y="0" width="100%" height="15" fill="#E5E5E5"/>
+		</svg>
+		<p style="margin-top:0px;margin-bottom:0px;">
+			{{label}}
+			<span style="float:right">
+				{{data}}
+			</span>
+		</p>
+		<br/>
+    </template>
+</dom-module>
+
+<script>
+	var defaultColors = ['#5da5da', '#faa43a', '#60bd68', '#f17cb0', '#b2912f',
+        '#b276b2', '#decf3f', '#f15854', '#4d4d4d'];
+                     
+    Polymer({
+        is: 'wy-machine-bar',
+        properties: {
+        	data: {
+                type: Number,
+                observer: 'changeWidth',
+            },
+            dataMaximum: {
+            	type: Number,
+            	observer: 'changeWidth',
+            	value: 100,
+            },
+            colorIndex: {
+                type: Number,
+                observer: 'changeColor'            	
+            },
+            label: {
+                type: String,
+                value: 'text',
+            }
+        },
+        attached: function() {
+            this.svg = d3.select(this.$$("svg"));
+            this.changeColor();
+            this.changeWidth();
+        },      
+        changeColor: function() {    
+        	if(this.svg) {
+        		this.svg.select(".value-rect").attr("fill", defaultColors[this.colorIndex]);
+        	}
+        },      
+        changeWidth: function() {    
+        	if(this.svg) {
+        		var strData = this.data*100/this.dataMaximum;
+        		this.svg.select(".value-rect").attr("width", strData.toString()+"%");
+        	}
+        },
+    });
+</script>

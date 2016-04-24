@@ -1,0 +1,120 @@
+<!-- this is a sample card which shows how to communicate with the outside world/other cards (through the deck) -->
+<dom-module id="pel-px-highcharts-gauge">
+    <template>
+    <div>
+		<div style="width: 160px; height: 80px; margin: 0 auto">
+		    <div id="container"></div>
+		</div>
+	</div>    
+    </template>
+</dom-module>
+
+<script src="../jquery/dist/jquery.min.js"></script>
+<script src="../highstock-release/highstock.js"></script>
+<script src="../highstock-release/highcharts-more.js"></script>
+<script src="../highstock-release/modules/solid-gauge.js"></script>
+
+<script>
+Polymer({
+	is: "pel-px-highcharts-gauge",
+	ready: function() {
+	},
+	properties: {
+	    data: {
+	      type: Number,
+	      notify: true,
+          observer: 'dataChanged'
+	    }
+	},	
+    init: function() {
+    },			
+    attached: function () {
+		this.chart = new Highcharts.Chart({
+            chart: {
+                type: 'solidgauge',
+                renderTo: this.$.container,
+                width: 150,
+                height: 80,
+            },            
+            annotationsOptions: {
+            		enabledButtons: false
+            },            
+            exporting: {
+                enabled: false
+            },            
+            title: null,
+            pane: {
+                center: ['50%', '85%'],
+                size: '140%',
+                startAngle: -90,
+                endAngle: 90,
+                background: {
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                    innerRadius: '60%',
+                    outerRadius: '100%',
+                    shape: 'arc'
+                }
+            },
+            tooltip: {
+                enabled: false
+            },
+            // the value axis
+            yAxis: {
+                stops: [
+                    [0.1, '#55BF3B'], // green
+                    [0.5, '#DDDF0D'], // yellow
+                    [0.9, '#DF5353'] // red
+                ],
+                lineWidth: 0,
+                minorTickInterval: null,
+                tickPixelInterval: 400,
+                tickWidth: 0,
+                title: {
+                    y: -70
+                },
+                labels: {
+                    y: 16
+                }
+            },
+            plotOptions: {
+                solidgauge: {
+                    dataLabels: {
+                        y: 5,
+                        borderWidth: 0,
+                        useHTML: true
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: '%'
+                }
+            },
+            series: [{
+                name: 'RPM',
+                data: [this.data],
+//                 dataLabels: {
+//                     format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+//                         ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y:.1f}</span><br/>' +
+//                            '<span style="font-size:12px;color:silver">* 1000 / min</span></div>'
+//                 },
+//                 tooltip: {
+//                     valueSuffix: ' revolutions/min'
+//                 }
+            }],
+            credits: {
+                enabled: false
+            }
+		});
+ 	},
+    dataChanged: function()
+    {
+        if (this.chart) {
+            this.chart.series[0].points[0].update(this.data);
+        }        
+    }
+});
+
+</script>

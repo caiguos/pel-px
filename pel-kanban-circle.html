@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer.html"/>
+
+<dom-module id="wy-machine-lamp">
+	<script type="text/javascript" src="../d3/d3.js"></script>
+    <template>
+		<svg width=30 height=30>		
+			<defs>
+				<radialGradient id="grey_blue" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+					<stop offset="0%" style="stop-color:rgb(200,200,200);stop-opacity:0"/>
+					<stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1"/>
+				</radialGradient>
+			</defs>			
+			<circle cx="12" cy="12" r="12"/>
+		</svg>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'wy-machine-lamp',
+        properties: {
+        	data: {
+                type: Boolean,
+                observer: 'changeColor'
+            },
+            legendLabel: {
+                type: String,
+                //observer: '_drawChart',
+                //value: function() {
+                //    return [];
+                //}
+            }
+        },
+        attached: function() {
+            this.svg = d3.select(this.$$("svg"));
+            this.changeColor();
+        },      
+        changeColor: function() {    
+        	if(this.svg) {
+        		this.svg.attr("fill", this.data ? "rgb(255,0,0)" : "rgb(200,200,200)");
+        	}
+        },
+    });
+</script>

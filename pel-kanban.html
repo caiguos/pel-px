@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="pel-kanban-main.html"/>
+
+<dom-module id="pel-kanban">
+	<style>
+	</style>
+    <template>
+    	<br/>
+		<pel-kanban-main label="M1" data=true></pel-kanban-main>
+		<pel-kanban-main label="M2" data=false></pel-kanban-main>
+		<pel-kanban-main label="M3" data=true></pel-kanban-main>
+		<pel-kanban-main label="M4" data=false></pel-kanban-main>
+	</template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'pel-kanban',
+        properties: {
+        	data: {
+                type: Boolean,
+                observer: 'changeColor'
+            },
+            svg: {
+                type: Object
+            },    
+            width: Number,
+            height: Number,
+            label: {
+                type: String,
+                //observer: '_drawChart'
+            }
+        },
+        attached: function() {
+            this.svg = d3.select(this.$$("svg"));
+            this.changeColor();
+        },      
+        changeColor: function() {    
+        	if(this.svg) {
+        		this.svg.attr("fill", this.data ? "rgb(255,0,0)" : "rgb(200,200,200)");
+        	}
+        },
+    });
+</script>

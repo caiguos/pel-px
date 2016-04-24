@@ -1,0 +1,69 @@
+<link rel="import" href="../pel-px-highcharts/pel-px-highcharts-gauge.html">
+
+<dom-module id="pel-px-monitor">
+    <template>
+    	<div>
+			<template is="dom-repeat" items="{{data}}">
+				<style>
+					:kanban-div {
+						width: 0.45;
+					}
+				</style>
+				<div style="width:220px; float:left; margin:2px;">
+				    <px-card header-text="{{item.bayName}}" chevron>
+				        <p style="color:white; height:22px; background-color:green">
+				        	{{item.stagingStep}}
+				        </p>
+				        <p>
+ 	 			        	<img src={{item.productImage}} 
+ 	 			        		style="float:left;width:64px;height:40px;">
+ 	 			        </p>
+ 	 			        <p style="height:50px;">	 
+				        	{{item.productName}}
+				        </p>
+				        <p>
+				        	<pel-px-highcharts-gauge data={{item.stagingProgress}}>
+				        	</pel-px-highcharts-gauge>
+				        </p>	
+<!-- 				        <progress style="background:green; height:22px; "  -->
+<!-- 				        	value={{item.stagingProgress}} max="100"> -->
+<!-- 				        </progress> -->
+				        <p>
+							 {{item.operatorName}}
+						</p>
+					    <template is="dom-if" if="{{item.isRobot}}">
+						    <i class="fa fa-android fa-2x"></i>&nbsp&nbsp&nbsp
+					    </template>
+					    <template is="dom-if" if="{{item.isConnected}}">
+					   	 <i class="fa fa-desktop fa-2x"></i>&nbsp&nbsp&nbsp
+					    </template>
+					    <i class="fa fa-columns fa-2x"></i>
+				    </px-card>
+			    </div>
+			</template>    
+	    </div>
+    </template>
+</dom-module>
+
+<script>
+Polymer({
+	is: "pel-px-monitor",
+	properties: {
+	    data: {
+			type: Array,
+			notify: true
+	    },
+	    column: {
+	        type: Number,
+	        value: 0.2
+	    },	 
+	    imageSrcPreix: {
+	        type: String
+	    }
+	},	
+    init: function() {
+    },			
+    attached: function () {
+ 	}
+});
+</script>

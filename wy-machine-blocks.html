@@ -1,0 +1,71 @@
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../px-widget-cards/px-threeup.html"/>
+<link rel="import" href="wy-machine-lamp.html"/>
+<link rel="import" href="wy-machine-bar.html"/>
+
+<dom-module id="wy-machine-blocks">
+    <link rel="import" type="css" href="css/widgets-card.css"/>
+    <link rel="import" type="css" href="css/material-main.css"/>
+    <template>
+    	<px-twoup id="sample-card-twoup" widget-header="Blocks">
+	    	<template is="dom-repeat" items="{{data}}">
+	            <div class="widget-1">
+	                <span class="badge badge-primary"><h4>{{item.desc}}</h4></span>
+	                <template is="dom-if" if="{{item.run}}">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+	                	<button button-run type="button" class="btn btn-success">Run</button>
+	                </template>
+	                <template is="dom-if" if="{{!item.run}}">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+	                	<button button-run type="button" class="btn">Run</button>
+	                </template>					
+	                <br/>
+	                <br/>
+	                <wy-machine-bar
+	                        data={{item.amp}}
+	                        data-maximum=50
+	                        color-index=0
+	                        label="Current">	                        
+	                </wy-machine-bar>		
+	                <wy-machine-bar
+	                        data={{item.voltage}}
+	                        data-maximum=50
+	                        color-index=1
+	                        label="Voltage">
+	                </wy-machine-bar>		
+	                <wy-machine-bar
+	                        data={{item.speed}}
+	                        data-maximum=10
+	                        color-index=2
+	                        label="Speed">
+	                </wy-machine-bar>
+	                <br/>
+	                <wy-machine-lamp
+	                        data={{item.fault1}}>
+	                </wy-machine-lamp>
+	                <wy-machine-lamp
+	                        data={{item.fault2}}>
+	                </wy-machine-lamp>	
+	                <wy-machine-lamp
+	                        data={{item.fault3}}>
+	                </wy-machine-lamp>			                	                		                	                                	                
+	            </div>
+	    	</template>
+	    </px-twoup>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'wy-machine-blocks',
+        behaviors: [px.card],
+        properties: {
+            data: {
+                type: Array
+            }
+        },
+        attached: function() {
+        	console.log(this);
+        }
+    });
+</script>

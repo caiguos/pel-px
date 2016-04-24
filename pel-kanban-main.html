@@ -1,0 +1,91 @@
+<link rel="import" href="../polymer/polymer.html"/>
+
+<dom-module id="pel-kanban-main">
+	<style>
+		.main-body {
+			fill:green;
+			stroke:purple;
+			stroke-width:1;
+			opacity:0.5;
+		}
+		.main-text {
+			fill:purple;
+			font-family:Verdana;
+			font-size:24px;
+		}		
+		.main-arraow {
+			fill:blue;
+			opacity:0.5;
+		}
+		.element-body {
+			fill:green;
+			stroke:purple;
+			stroke-width:1;
+			opacity:0.5;
+		}			
+		.element-polyline {
+			fill:none;
+			stroke:purple;
+			stroke-width:2;
+		}
+		.element-text {
+			fill:purple;
+			font-family:Verdana;
+			font-size:10px;
+		}				
+	</style>
+    <template>
+		<svg width=225 height=600>	
+			<rect class="main-body" x="1" y="1" width="170" height="90"/>	
+			<text class="main-text" x="70" y="55">{{label}}</text>
+			<path class="main-arraow" transform="scale(0.07) translate(2510,960) rotate(270)"
+				d="M4.236,352.303l234.142,327.266c4.229,5.924,11.079,9.426,18.359,9.443c0.052,0,0.052,0,0.052,0
+				c7.319-0.018,14.155-3.555,18.412-9.522l232.628-327.248c4.896-6.897,5.528-15.963,1.641-23.475
+				c-3.835-7.504-11.61-12.229-20.088-12.229H379.896l0.009-293.935C379.904,10.11,369.795,0,357.289,0L154.731,0.009
+				C142.248,0,132.13,10.11,132.121,22.62v293.896H22.612c-8.447,0-16.2,4.765-20.101,12.286
+				C-1.381,336.313-0.705,345.4,4.236,352.303z"/>	
+				
+			<polyline class="element-polyline" points="10,92 10,130 20,130"/>
+			<rect class="element-body" x="20" y="120" width="25" height="20"/>	
+			<text class="element-text" x="26" y="134">K1</text>			
+			
+			<polyline class="element-polyline" points="70,92 70,130 80,130"/>
+			<polygon class="element-body" points="88,115 74,140 102,140"/>		
+			<text class="element-text" x="82" y="134">F1</text>	
+			
+			<polyline class="element-polyline" points="130,92 130,130 140,130"/>
+			<circle class="element-body" cx="154" cy="130" r="14"/>		
+			<text class="element-text" x="147" y="134">S1</text>	
+		</svg>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'pel-kanban-main',
+        properties: {
+        	data: {
+                type: Boolean,
+                observer: 'changeColor'
+            },
+            svg: {
+                type: Object
+            },    
+            width: Number,
+            height: Number,
+            label: {
+                type: String,
+                //observer: '_drawChart'
+            }
+        },
+        attached: function() {
+            this.svg = d3.select(this.$$("svg"));
+            this.changeColor();
+        },      
+        changeColor: function() {    
+        	if(this.svg) {
+        		this.svg.attr("fill", this.data ? "rgb(255,0,0)" : "rgb(200,200,200)");
+        	}
+        },
+    });
+</script>
